@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "title": "Sample Document 1",
+    "content": "This is a test document about artificial intelligence.",
+    "category": "Tech",
+    "date": "2024-01-15",
+    "dummy_embedding": [0.2] * 384
+  },
+  {
+    "id": 2,
+    "title": "Science News",
+    "content": "Latest discoveries in quantum computing.",
+    "category": "Science",
+    "date": "2024-02-20",
+    "dummy_embedding": [0.1] * 384
+  }
+]
