@@ -13,8 +13,18 @@ def load_mock_data():
         )
 
 def main():
-    st.title("🔍 Document Search Engine")
-    df = load_mock_data()
+
+    url = 'https://raw.githubusercontent.com/S-Keddy/IR-data/main/embeddings_final_pt1.csv.gz'
+    df = pd.read_csv(url, compression='gzip')
+    
+    # Add image at the top
+    st.image("logo.png", 
+             use_container_width=True,
+             caption="Document Search Engine")  
+
+    # st.title("🔍 Document Search Engine")
+
+    # df = load_mock_data()
     min_date = df['date'].min().date()
     max_date = df['date'].max().date()
     categories = sorted(df['category'].unique())
