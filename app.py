@@ -3,19 +3,63 @@ import pandas as pd
 import json
 from datetime import date
 from st_aggrid import AgGrid, GridOptionsBuilder
+import zipfile
+import os
+from io import BytesIO
+import glob
 
-@st.cache_data
-def load_mock_data():
-    with open("mock_documents.json") as f:
-        return pd.DataFrame(json.load(f)).assign(
-            date=lambda df: pd.to_datetime(df['date']),
-            content_preview=lambda df: df['content'].str[:200] + "..."
-        )
+# @st.cache_data
+# def load_mock_data():
+#     with open("mock_documents.json") as f:
+#         return pd.DataFrame(json.load(f)).assign(
+#             date=lambda df: pd.to_datetime(df['date']),
+#             content_preview=lambda df: df['content'].str[:200] + "..."
+#         )
+
+@st.cache_data(show_spinner=True, ttl=3600)
+def load_corpus():
+    # Configure paths and file patterns
+    data_dir = "corpus_data"
+    csv_files = glob.glob(os.path.join(data_dir, "*.csv"))
+    zip_files = glob.glob(os.path.join(data_dir, "*.zip"))
+    
+    # Define efficient data types to reduce memory usage
+    dtype_mapping = {
+        'title': 'category',
+        'content': 'string',
+        'category': 'category',
+        'date': 'datetime64[ns]'
+    }
+    
+    metadata_dfs = []
+    embeddings_dfs = []
+    
+    # Process CSV files
+    
+    metadata_df = pd.concat([pd.read_csv(csv_file, dtype=dtype_mapping, parse_dates=['date']) for csv_file in csv_files])
+    
+    # Process ZIP files containing CSVs
+    for zip_file in zip_files:
+        with zipfile.ZipFile(zip_file) as z:
+            for file_info in z.infolist():
+                if file_info.filename.endswith('.csv'):
+                    with z.open(file_info) as f:
+                        embeddings_df = pd.read_csv(f, dtype=dtype_mapping, parse_dates=['date'])
+                        embeddings_dfs.append(embeddings_df)
+
+    embeddings_df = pd.concat(embeddings_dfs, ignore_index=True)
+    
+    # Combine and optimize final dataframe
+    combined_df = pd.concat(dfs, ignore_index=True)
+    
+    # Convert to more efficient types
+    combined_df = combined_df.astype(dtype_mapping)
+    
+    return combined_df
 
 def main():
 
-    url = 'https://raw.githubusercontent.com/S-Keddy/IR-data/main/embeddings_final_pt1.csv.gz'
-    df = pd.read_csv(url, compression='gzip')
+
     
     # Add image at the top
     st.image("logo.png", 
@@ -25,8 +69,8 @@ def main():
     # st.title("🔍 Document Search Engine")
 
     # df = load_mock_data()
-    min_date = df['date'].min().date()
-    max_date = df['date'].max().date()
+    min_date = df['publish_time'].min().date()
+    max_date = df['publish_time'].max().date()
     categories = sorted(df['category'].unique())
 
     # Custom CSS for styling
