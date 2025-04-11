@@ -169,7 +169,7 @@ def main():
             
             # Prepare display dataframe
             display_df = results.reset_index()[[
-                'cord_uid', 'title', 'publish_time', 'abstract', 'tags'
+                'title', 'publish_time', 'abstract', 'tags'
             ]]
             display_df['similarity'] = np.round(scores[:len(results)], 3)
             display_df['publish_time'] = display_df['publish_time'].dt.strftime('%d %b %Y')
@@ -181,7 +181,7 @@ def main():
             st.dataframe(
                 display_df,
                 column_config={
-                    "cord_uid": "Document ID",
+                    # "cord_uid": "Document ID",
                     "title": "Title",
                     "publish_time": "Published",
                     "abstract": st.column_config.TextColumn(
