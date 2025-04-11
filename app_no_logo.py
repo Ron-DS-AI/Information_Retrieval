@@ -1,3 +1,6 @@
+# all-mpnet-base-v2
+
+
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -88,11 +91,7 @@ def search(query, corpus, model, top_k=50):
     return corpus.iloc[top_indices], similarities[top_indices]
 
 def main():
-    st.set_page_config(layout="wide", page_title="Document Search", page_icon="🔍")
-    
-    # Logo and Header
-    st.image("logo.png", width=300)  # Fixed width for compatibility
-    st.title("Research Document Search Engine")
+    st.set_page_config(layout="wide", page_title="Document Search")
     
     # Load data and model
     with st.spinner("Loading corpus and model..."):
@@ -115,45 +114,50 @@ def main():
             max_value=max_date
         )
         
-        # Tag filtering
+        # Tag filtering with vertical layout
         st.subheader("Filter by Tags")
         tag_search = st.text_input("Search tags:", "").lower()
         filtered_tags = [t for t in all_tags if tag_search in t.lower()]
         
+        # Create a scrollable container for tags
         tags_container = st.container()
         with tags_container:
+            # Vertical checkboxes with wrapping
             selected_tags = []
             for tag in filtered_tags:
                 if st.checkbox(
                     f"{tag} ({tag_freq[tag]})",
-                    key=f"tag_{tag}"
+                    key=f"tag_{tag}",
+                    help=f"Show documents tagged with {tag}"
                 ):
                     selected_tags.append(tag)
 
-        # CSS for tag display
+        # Add CSS for wrapping long tag names
         st.markdown("""
         <style>
-        div[role="checkbox"] label {
-            white-space: normal;
-            word-wrap: break-word;
-            margin: 8px 0;
-            line-height: 1.4;
+        div[data-testid="stVerticalBlock"] {
+            max-height: 1000px;  /* Increased from 400px */
+            overflow-y: auto;
+            padding-right: 10px;
+            margin-bottom: 2rem;
         }
         </style>
         """, unsafe_allow_html=True)
 
-        
     # Main interface
+    st.title("Research Document Search")
+    
     if query:
         with st.spinner(f"Searching for '{query}'..."):
             raw_results, scores = search(query, corpus, model, top_k)
             
-            # Apply filters
+            # Apply date filter
             date_filtered = raw_results[
                 (raw_results['publish_time'].dt.date >= start_date) &
                 (raw_results['publish_time'].dt.date <= end_date)
             ]
             
+            # Apply tag filter
             if selected_tags:
                 results = date_filtered[
                     date_filtered['tags'].apply(
@@ -169,7 +173,7 @@ def main():
             
             # Prepare display dataframe
             display_df = results.reset_index()[[
-                'cord_uid', 'title', 'publish_time', 'abstract', 'tags'
+                'cord_uid', 'title', 'publish_time', 'abstract', 'referenced_by_count', 'tags'
             ]]
             display_df['similarity'] = np.round(scores[:len(results)], 3)
             display_df['publish_time'] = display_df['publish_time'].dt.strftime('%d %b %Y')
@@ -189,6 +193,7 @@ def main():
                         width="large"
                     ),
                     "tags": "Categories",
+                    "referenced_by_count": "Citations",
                     "similarity": st.column_config.NumberColumn(
                         "Relevance",
                         format="%.3f"
