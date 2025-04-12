@@ -93,7 +93,7 @@ def main():
     st.set_page_config(layout="wide", page_title="Document Search", page_icon="🔍")
     
     # Logo and Header
-    st.image("logo.png", width=300)
+    st.image("logo.png", width=300)  # Fixed width for compatibility
     st.title("Research Document Search Engine")
     
     # Load data and model
@@ -105,7 +105,7 @@ def main():
     with st.sidebar:
         st.header("Search Parameters")
         query = st.text_input("Enter your search query:")
-        top_k = st.slider("Number of results to display", 10, 100, 50)
+        top_k = st.slider("Number of results", 10, 100, 50)
         
         # Date range filter with validation
         min_date = corpus['publish_time'].min().date()
@@ -158,20 +158,19 @@ def main():
         }
         </style>
         """, unsafe_allow_html=True)
+
         
     # Main interface
     if query:
         with st.spinner(f"Searching for '{query}'..."):
-            # Retrieve more results initially to account for filtering
-            raw_results, scores = search(query, corpus, model, top_k=1000)  # Large initial fetch
+            raw_results, scores = search(query, corpus, model, top_k)
             
-            # Apply date filter
+            # Apply filters
             date_filtered = raw_results[
                 (raw_results['publish_time'].dt.date >= start_date) &
                 (raw_results['publish_time'].dt.date <= end_date)
             ]
             
-            # Apply tag filter
             if selected_tags:
                 results = date_filtered[
                     date_filtered['tags'].apply(
@@ -181,32 +180,27 @@ def main():
             else:
                 results = date_filtered
             
-            # Trim to top_k results after filtering
-            results = results.iloc[:top_k]
-            scores = scores[:len(results)]
-            
             if results.empty:
-                st.warning("No documents match your search criteria. Try adjusting the filters.")
+                st.warning("No documents match your search criteria")
                 return
             
             # Prepare display dataframe
             display_df = results.reset_index()[['title', 'publish_time', 'abstract', 'tags']]
-            display_df['similarity'] = np.round(scores, 3)
+            display_df['similarity'] = np.round(scores[:len(results)], 3)
             display_df['publish_time'] = display_df['publish_time'].dt.strftime('%d %b %Y')
             display_df['tags'] = display_df['tags'].apply(lambda x: ', '.join(x))
             
             # Display results
-            st.subheader(f"Showing {len(results)} Results ({start_date} to {end_date})")
-            if len(results) < top_k:
-                st.info(f"Only {len(results)} results found after applying filters. Adjust filters to see more.")
+            st.subheader(f"Top {len(results)} Results ({start_date} to {end_date})")
             
             st.dataframe(
                 display_df,
                 column_config={
+                    "cord_uid": "Document ID",
                     "title": "Title",
                     "publish_time": st.column_config.DateColumn(
                         "Published",
-                        format="DD MMM YYYY",
+                        format="DD MMM YYYY",  # Streamlit will format the display
                     ),
                     "abstract": st.column_config.TextColumn(
                         "Abstract",
