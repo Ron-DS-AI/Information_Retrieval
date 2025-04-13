@@ -232,7 +232,7 @@ def main():
                 column_config={
                     "Rank": st.column_config.NumberColumn(
                         "Rank",
-                        width=10
+                        width=30
                     ),
                     "title": "Title",
                     "publish_time": st.column_config.DateColumn(
