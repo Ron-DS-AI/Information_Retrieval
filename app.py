@@ -12,12 +12,12 @@ from datetime import date
 # Configuration
 CORPUS_PATH = "corpus_data_SBERT_trained"
 EMBEDDING_FILES = [
-    "embeddings_final_pt1_mj.csv.gz",
-    "embeddings_final_pt2_mj.csv.gz"
+    "embeddings_part1.csv.gz",
+    "embeddings_part2.csv.gz"
 ]
 METADATA_FILES = [
-    "metadata_final_pt1.csv",
-    "metadata_final_pt2.csv"
+    "metadata_part1_final.csv",
+    "metadata_part2_final.csv"
 ]
 
 @st.cache_resource
