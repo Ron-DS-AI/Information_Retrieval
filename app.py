@@ -93,7 +93,7 @@ def main():
     st.set_page_config(layout="wide", page_title="Document Search", page_icon="🔍")
     
     # Logo and Header
-    st.image("logo.png", width=300)
+    st.image("shuttle_logo_cropped.png", width=300)
     st.title("Research Document Search Engine")
     
     # Load data and model
@@ -106,6 +106,15 @@ def main():
         st.header("Search Parameters")
         query = st.text_input("Enter your search query:")
         top_k = st.slider("Number of results to display", 10, 100, 50)
+        # Slider for minimum referenced_by_count
+        max_refs = int(corpus['referenced_by_count'].max())
+        min_refs = st.slider(
+            "Minimum references",
+            min_value=0,
+            max_value=max_refs,
+            value=0,
+            step=1
+        )
         
         # Date range filter with validation
         min_date = corpus['publish_time'].min().date()
@@ -162,8 +171,14 @@ def main():
     # Main interface
     if query:
         with st.spinner(f"Searching for '{query}'..."):
-            # Retrieve more results initially to account for filtering
-            raw_results, scores = search(query, corpus, model, top_k=1000)  # Large initial fetch
+            if query.strip() == '*':
+                # Special case: '*' returns all documents
+                raw_results = corpus
+                scores = np.zeros(len(corpus))  # Placeholder scores
+                st.info("Showing all documents matching filters (date, tags, references).")
+            else:
+                # Regular semantic search
+                raw_results, scores = search(query, corpus, model, top_k=1000)
             
             # Apply date filter
             date_filtered = raw_results[
@@ -173,13 +188,18 @@ def main():
             
             # Apply tag filter
             if selected_tags:
-                results = date_filtered[
+                tag_filtered = date_filtered[
                     date_filtered['tags'].apply(
                         lambda x: any(tag in x for tag in selected_tags)
                     )
                 ]
             else:
-                results = date_filtered
+                tag_filtered = date_filtered
+            
+            # Apply referenced_by_count filter
+            results = tag_filtered[
+                tag_filtered['referenced_by_count'] >= min_refs
+            ]
             
             # Trim to top_k results after filtering
             results = results.iloc[:top_k]
@@ -190,10 +210,17 @@ def main():
                 return
             
             # Prepare display dataframe
-            display_df = results.reset_index()[['title', 'publish_time', 'abstract', 'tags']]
-            display_df['similarity'] = np.round(scores, 3)
+            display_df = results.reset_index()[['title', 'publish_time', 'abstract', 'referenced_by_count', 'url']]
+            if query.strip() == '*':
+                display_df['similarity'] = None  # No similarity for '*' query
+                display_df['Rank'] = range(1, len(display_df) + 1)  # Sequential rank
+            else:
+                display_df['similarity'] = np.round(scores, 3)
+                display_df['Rank'] = display_df['similarity'].rank(ascending=False, method='min').astype(int)
             display_df['publish_time'] = display_df['publish_time'].dt.strftime('%d %b %Y')
-            display_df['tags'] = display_df['tags'].apply(lambda x: ', '.join(x))
+            
+            # Reorder columns to show Rank first
+            display_df = display_df[['Rank', 'title', 'publish_time', 'abstract', 'referenced_by_count', 'url', 'similarity']]
             
             # Display results
             st.subheader(f"Showing {len(results)} Results ({start_date} to {end_date})")
@@ -203,6 +230,10 @@ def main():
             st.dataframe(
                 display_df,
                 column_config={
+                    "Rank": st.column_config.NumberColumn(
+                        "Rank",
+                        width=10
+                    ),
                     "title": "Title",
                     "publish_time": st.column_config.DateColumn(
                         "Published",
@@ -212,7 +243,14 @@ def main():
                         "Abstract",
                         width="large"
                     ),
-                    "tags": "Categories",
+                    "referenced_by_count": st.column_config.NumberColumn(
+                        "References",
+                        format="%d"
+                    ),
+                    "url": st.column_config.LinkColumn(
+                        "URL",
+                        display_text="Link"
+                    ),
                     "similarity": st.column_config.NumberColumn(
                         "Relevance",
                         format="%.3f"
@@ -223,7 +261,7 @@ def main():
             )
             
             # Download button
-            csv = display_df.to_csv(index=False).encode('utf-8')
+            csv = display_df.to_csv(index=False, na_rep='').encode('utf-8')
             st.download_button(
                 "Download Results",
                 data=csv,
