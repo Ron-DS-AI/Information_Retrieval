@@ -1,0 +1,106 @@
+query-id,topic-id,query,query_type
+1,1,coronavirus origin,short_form
+2,2,coronavirus response to weather changes,short_form
+3,3,coronavirus immunity,short_form
+4,4,how do people die from the coronavirus,short_form
+5,5,animal models of COVID-19,short_form
+6,6,coronavirus test rapid testing,short_form
+7,7,serological tests for coronavirus,short_form
+8,8,coronavirus under reporting,short_form
+9,9,coronavirus in Canada,short_form
+10,10,coronavirus social distancing impact,short_form
+11,11,coronavirus hospital rationing,short_form
+12,12,coronavirus quarantine,short_form
+13,13,how does coronavirus spread,short_form
+14,14,coronavirus super spreaders,short_form
+15,15,coronavirus outside body,short_form
+16,16,how long does coronavirus survive on surfaces,short_form
+17,17,coronavirus clinical trials,short_form
+18,18,masks prevent coronavirus,short_form
+19,19,what alcohol sanitizer kills coronavirus,short_form
+20,20,coronavirus and ACE inhibitors,short_form
+21,21,coronavirus mortality,short_form
+22,22,coronavirus heart impacts,short_form
+23,23,coronavirus hypertension,short_form
+24,24,coronavirus diabetes,short_form
+25,25,coronavirus biomarkers,short_form
+26,26,coronavirus early symptoms,short_form
+27,27,coronavirus asymptomatic,short_form
+28,28,coronavirus hydroxychloroquine,short_form
+29,29,coronavirus drug repurposing,short_form
+30,30,coronavirus remdesivir,short_form
+31,31,difference between coronavirus and flu,short_form
+32,32,coronavirus subtypes,short_form
+33,33,coronavirus vaccine candidates,short_form
+34,34,coronavirus recovery,short_form
+35,35,coronavirus public datasets,short_form
+36,1,what is the origin of COVID-19,question
+37,2,how does the coronavirus respond to changes in the weather,question
+38,3,will SARS-CoV2 infected people develop immunity? Is cross protection possible?,question
+39,4,what causes death from Covid-19?,question
+40,5,what drugs have been active against SARS-CoV or SARS-CoV-2 in animal studies?,question
+41,6,what types of rapid testing for Covid-19 have been developed?,question
+42,7,are there serological tests that detect antibodies to coronavirus?,question
+43,8,how has lack of testing availability led to underreporting of true incidence of Covid-19?,question
+44,9,how has COVID-19 affected Canada,question
+45,10,has social distancing had an impact on slowing the spread of COVID-19?,question
+46,11,what are the guidelines for triaging patients infected with coronavirus?,question
+47,12,what are best practices in hospitals and at home in maintaining quarantine?,question
+48,13,what are the transmission routes of coronavirus?,question
+49,14,what evidence is there related to COVID-19 super spreaders,question
+50,15,how long can the coronavirus live outside the body,question
+51,16,how long does coronavirus remain stable  on surfaces?,question
+52,17,are there any clinical trials available for the coronavirus,question
+53,18,what are the best masks for preventing infection by Covid-19?,question
+54,19,what type of hand sanitizer is needed to destroy Covid-19?,question
+55,20,are patients taking Angiotensin-converting enzyme inhibitors (ACE) at increased risk for COVID-19?,question
+56,21,what are the mortality rates overall and in specific populations,question
+57,22,are cardiac complications likely in patients with COVID-19?,question
+58,23,what kinds of complications related to COVID-19 are associated with hypertension?,question
+59,24,what kinds of complications related to COVID-19 are associated with diabetes,question
+60,25,which biomarkers predict the severe clinical course of 2019-nCOV infection?,question
+61,26,what are the initial symptoms of Covid-19?,question
+62,27,what is known about those infected with Covid-19 but are asymptomatic?,question
+63,28,what evidence is there for the value of hydroxychloroquine in treating Covid-19?,question
+64,29,which SARS-CoV-2 proteins-human proteins interactions indicate potential for drug targets. Are there approved drugs that can be repurposed based on this information?,question
+65,30,is remdesivir an effective treatment for COVID-19,question
+66,31,How does the coronavirus differ from seasonal flu?,question
+67,32,"Does SARS-CoV-2 have any subtypes, and if so what are they?",question
+68,33,What vaccine candidates are being tested for Covid-19?,question
+69,34,What are the longer-term complications of those who recover from COVID-19?,question
+70,35,What new public datasets are available related to COVID-19?,question
+71,1,"seeking range of information about the SARS-CoV-2 virus's origin, including its evolution, animal source, and first transmission into humans",long_form
+72,2,seeking range of information about the SARS-CoV-2 virus viability in different weather/climate conditions as well as information related to transmission of the virus in different climate conditions,long_form
+73,3,seeking studies of immunity developed due to infection with SARS-CoV2 or cross protection gained due to infection with other coronavirus types,long_form
+74,4,Studies looking at mechanisms of death from Covid-19.,long_form
+75,5,Papers that describe the results  of testing drugs that bind to spike proteins of the virus or any other drugs in any animal models. Papers about SARS-CoV-2 infection in cell culture assays are also relevant.,long_form
+76,6,Looking for studies identifying ways to diagnose Covid-19 more rapidly.,long_form
+77,7,Looking for assays that measure immune response to COVID-19 that will help determine past infection and subsequent possible immunity.,long_form
+78,8,Looking for studies answering questions of impact of lack of complete testing for Covid-19 on incidence and prevalence of Covid-19.,long_form
+79,9,"seeking data related to infections (confirm, suspected, and projected) and health outcomes (symptoms, hospitalization, intensive care, mortality)",long_form
+80,10,seeking specific information on studies that have measured COVID-19's transmission in one or more social distancing (or non-social distancing) approaches,long_form
+81,11,"Seeking information on any guidelines for prioritizing COVID-19 patients infected with coronavirus based on demographics, clinical signs, serology and other tests.",long_form
+82,12,Seeking information on best practices for activities and duration of quarantine for those exposed and/ infected to COVID-19 virus.,long_form
+83,13,"Looking for information on all possible ways to contract COVID-19 from people, animals and objects",long_form
+84,14,"seeking range of information related to the number and proportion of super spreaders, their patterns of behavior that lead to spread, and potential prevention strategies targeted specifically toward super spreaders",long_form
+85,15,"seeking range of information on the SARS-CoV-2's virus's survival in different environments (surfaces, liquids, etc.) outside the human body while still being viable for transmission to another human",long_form
+86,16,"Studies of time SARS-CoV-2 remains stable after being deposited from an infected person on everyday surfaces in a household or hospital setting, such as through coughing or touching objects.",long_form
+87,17,seeking specific COVID-19 clinical trials ranging from trials in recruitment to completed trials with results,long_form
+88,18,What types of masks should or should not be used to prevent infection by Covid-19?,long_form
+89,19,Studies assessing chemicals and their concentrations needed to destroy the Covid-19 virus.,long_form
+90,20,"Looking for information on interactions between  coronavirus and  angiotensin converting enzyme 2 (ACE2) receptors, risk for patients taking these medications, and recommendations for these patients.",long_form
+91,21,"Seeking  information on COVID-19 fatality rates in different countries and in different population groups based on gender, blood types, or other factors",long_form
+92,22,"Seeking information on the types, frequency and mechanisms of cardiac complications caused by coronavirus.",long_form
+93,23,seeking specific outcomes that hypertensive  (any type) patients are more/less likely to face if infected with the virus,long_form
+94,24,seeking specific outcomes that diabetic (any type) patients are more/less likely to face if infected with the virus,long_form
+95,25,"Looking for information on biomarkers that predict disease outcomes in people infected with coronavirus, specifically those that predict severe and fatal outcomes.",long_form
+96,26,Studies of patients and the first clinical manifestations they develop upon active infection?,long_form
+97,27,Studies of people who are known to be infected with Covid-19 but show no symptoms?,long_form
+98,28,Basic science or clinical studies assessing the benefit and harms of treating Covid-19 with hydroxychloroquine.,long_form
+99,29,"Seeking information about protein-protein interactions for any of the SARS-CoV-2  structural proteins that represent a promising therapeutic target,  and the drug  molecules that may inhibit the virus and the host cell receptors at entry step.",long_form
+100,30,seeking specific information on clinical outcomes in COVID-19 patients treated with remdesivir,long_form
+101,31,"Includes studies ranging from those focusing on genomic differences to global public health impacts, but must draw direct comparisons between COVID-19 and seasonal influenza.",long_form
+102,32,"Papers that discuss subtypes of the virus, from named subtypes to speculative subtypes based on genomic or geographic clustering.",long_form
+103,33,"Seeking studies that discuss possible, but specific, COVID-19 vaccines. Includes articles from those describing the mechanisms of action of specific proposed vaccines to actual clinical trials, but excluding articles that do not name a specific vaccine candidate.",long_form
+104,34,Seeking information on the health outcomes for those that recover from the virus. Excludes studies only focusing on adverse effects related to a particular COVID-19 drug.,long_form
+105,35,"Seeking articles that specifically release new data related to SARS-CoV-2 or COVID-19, including genomic data, patient data, public health data, etc. Articles that reference previously existing datasets are not relevant.",long_form
