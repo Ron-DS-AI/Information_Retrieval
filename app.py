@@ -22,7 +22,6 @@ METADATA_FILES = [
 
 @st.cache_resource
 def load_model():
-    # return SentenceTransformer('all-mpnet-base-v2')
     return SentenceTransformer('StephKeddy/sbert-IR-covid-search-v2')    
 
 @st.cache_data
@@ -89,6 +88,11 @@ def search(query, corpus, model, top_k=50):
     similarities = cosine_similarity(query_embedding, doc_embeddings)[0]
     top_indices = similarities.argsort()[-top_k:][::-1]
     return corpus.iloc[top_indices], similarities[top_indices]
+
+def recalibrate_score(score, low=0.9995, high=1.0):
+    """Rescales cosine similarity to a 0-100 relevance score."""
+    score = np.clip(score, low, high)
+    return round(100 * (score - low) / (high - low), 1)
 
 def main():
     st.set_page_config(layout="wide", page_title="Document Search", page_icon="🔍")
@@ -216,8 +220,10 @@ def main():
                 display_df['similarity'] = None  # No similarity for '*' query
                 display_df['Rank'] = range(1, len(display_df) + 1)  # Sequential rank
             else:
-                display_df['similarity'] = np.round(scores, 3)
-                display_df['Rank'] = display_df['similarity'].rank(ascending=False, method='min').astype(int)
+                # Recalibrate scores for display
+                display_df['similarity'] = np.array([recalibrate_score(score) for score in scores])
+                # Rank based on original scores to preserve granularity
+                display_df['Rank'] = pd.Series(scores).rank(ascending=False, method='min').astype(int)
             display_df['publish_time'] = display_df['publish_time'].dt.strftime('%d %b %Y')
             
             # Reorder columns to show Rank first
@@ -254,7 +260,7 @@ def main():
                     ),
                     "similarity": st.column_config.NumberColumn(
                         "Relevance",
-                        format="%.3f"
+                        format="%.1f"  # Updated to match recalibrate_score precision
                     )
                 },
                 hide_index=True,
