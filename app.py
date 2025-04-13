@@ -22,7 +22,8 @@ METADATA_FILES = [
 
 @st.cache_resource
 def load_model():
-    return SentenceTransformer('all-mpnet-base-v2')
+    # return SentenceTransformer('all-mpnet-base-v2')
+    return SentenceTransformer('StephKeddy/sbert-IR-covid-search')    
 
 @st.cache_data
 def load_corpus():
@@ -232,7 +233,7 @@ def main():
                 column_config={
                     "Rank": st.column_config.NumberColumn(
                         "Rank",
-                        width=35
+                        width=45
                     ),
                     "title": "Title",
                     "publish_time": st.column_config.DateColumn(
