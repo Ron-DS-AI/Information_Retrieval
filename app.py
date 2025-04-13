@@ -23,7 +23,7 @@ METADATA_FILES = [
 @st.cache_resource
 def load_model():
     # return SentenceTransformer('all-mpnet-base-v2')
-    return SentenceTransformer('StephKeddy/sbert-IR-covid-search')    
+    return SentenceTransformer('StephKeddy/sbert-IR-covid-search-v2')    
 
 @st.cache_data
 def load_corpus():
