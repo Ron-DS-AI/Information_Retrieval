@@ -1,0 +1,34 @@
+query-id,topic-id,query,query_type
+9,9,coronavirus in Canada,short_form
+13,13,how does coronavirus spread,short_form
+16,16,how long does coronavirus survive on surfaces,short_form
+20,20,coronavirus and ACE inhibitors,short_form
+22,22,coronavirus heart impacts,short_form
+44,9,how has COVID-19 affected Canada,question
+48,13,what are the transmission routes of coronavirus?,question
+51,16,how long does coronavirus remain stable  on surfaces?,question
+55,20,are patients taking Angiotensin-converting enzyme inhibitors (ACE) at increased risk for COVID-19?,question
+57,22,are cardiac complications likely in patients with COVID-19?,question
+79,9,"seeking data related to infections (confirm, suspected, and projected) and health outcomes (symptoms, hospitalization, intensive care, mortality)",long_form
+83,13,"Looking for information on all possible ways to contract COVID-19 from people, animals and objects",long_form
+86,16,"Studies of time SARS-CoV-2 remains stable after being deposited from an infected person on everyday surfaces in a household or hospital setting, such as through coughing or touching objects.",long_form
+90,20,"Looking for information on interactions between  coronavirus and  angiotensin converting enzyme 2 (ACE2) receptors, risk for patients taking these medications, and recommendations for these patients.",long_form
+92,22,"Seeking information on the types, frequency and mechanisms of cardiac complications caused by coronavirus.",long_form
+10,10,coronavirus social distancing impact,short_form
+14,14,coronavirus super spreaders,short_form
+17,17,coronavirus clinical trials,short_form
+25,25,coronavirus biomarkers,short_form
+27,27,coronavirus asymptomatic,short_form
+30,30,coronavirus remdesivir,short_form
+45,10,has social distancing had an impact on slowing the spread of COVID-19?,question
+49,14,what evidence is there related to COVID-19 super spreaders,question
+52,17,are there any clinical trials available for the coronavirus,question
+60,25,which biomarkers predict the severe clinical course of 2019-nCOV infection?,question
+62,27,what is known about those infected with Covid-19 but are asymptomatic?,question
+65,30,is remdesivir an effective treatment for COVID-19,question
+80,10,seeking specific information on studies that have measured COVID-19's transmission in one or more social distancing (or non-social distancing) approaches,long_form
+84,14,"seeking range of information related to the number and proportion of super spreaders, their patterns of behavior that lead to spread, and potential prevention strategies targeted specifically toward super spreaders",long_form
+87,17,seeking specific COVID-19 clinical trials ranging from trials in recruitment to completed trials with results,long_form
+95,25,"Looking for information on biomarkers that predict disease outcomes in people infected with coronavirus, specifically those that predict severe and fatal outcomes.",long_form
+97,27,Studies of people who are known to be infected with Covid-19 but show no symptoms?,long_form
+100,30,seeking specific information on clinical outcomes in COVID-19 patients treated with remdesivir,long_form
