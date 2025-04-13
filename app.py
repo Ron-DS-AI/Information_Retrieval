@@ -10,7 +10,7 @@ from datetime import datetime
 from datetime import date
 
 # Configuration
-CORPUS_PATH = "corpus_data"
+CORPUS_PATH = "corpus_data_SBERT_trained"
 EMBEDDING_FILES = [
     "embeddings_final_pt1_mj.csv.gz",
     "embeddings_final_pt2_mj.csv.gz"
