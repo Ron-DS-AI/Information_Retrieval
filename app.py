@@ -119,12 +119,12 @@ def main():
         # Number input for minimum referenced_by_count
         max_refs = int(corpus['referenced_by_count'].max())
         min_refs = st.number_input(
-            "Minimum references",
+            "Minimum cited by",
             min_value=0,
             max_value=max_refs,
             value=0,
             step=1,
-            help=f"Enter a number between 0 and {max_refs} to filter documents by minimum references."
+            help=f"Enter a number between 0 and {max_refs} to filter documents by minimum citations."
         )
         
         # Date range filter with validation
@@ -259,7 +259,7 @@ def main():
                         width="large"
                     ),
                     "referenced_by_count": st.column_config.NumberColumn(
-                        "References",
+                        "# Cited By",
                         format="%d"
                     ),
                     "url": st.column_config.LinkColumn(
