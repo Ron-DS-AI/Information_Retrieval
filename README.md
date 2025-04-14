@@ -1,7 +1,21 @@
-# Information_Retrieval
+# Coursework 2 - Creating a document-based search engine 
 * Information retrieval assignment - Group 7
 * Date: 14/04/25
 * Created by: Stephanie Edwards, Munir Jahangir, Neelam Ahmed and Ronald Almeida
+
+## **About Shuttle**
+
+**Try Shuttle HERE** >> [informationretrieval.streamlit.app](https://informationretrieval.streamlit.app/) 
+
+Shuttle provides a simple, user-friendly interface for academic document retrieval tasks. The Search bar on the left offers freeform input for natural language or keyword queries, with the ability to narrow down the number of results returned.
+
+There are also filters:
+* By reference count
+* By date
+* By tag, for intent filtering
+
+When the results are returned, the user can sort via any column to help narrow down the documents listed. Users can easily access the papers returned via the Link column, or download the results as a CSV file for later analysis.
+Users can also input ‘*’ as a wildcard to return all documents, allowing users to rely solely on filter and sorting for exploratory analysis.
 
 ## **TREC COVID2 (rnd3) Dataset**
 The original dataset was downloaded from here: [https://www.kaggle.com/competitions/trec-covid-information-retrieval/data?select=docids-rnd3.txt ](https://www.kaggle.com/competitions/trec-covid-information-retrieval/data) 
@@ -47,3 +61,5 @@ Step 2: Search purpose tag category creation:
 * [metadata_part2_final.csv](https://github.com/Ron-DS-AI/Information_Retrieval/blob/main/full_corpus_SBERT_trained/metadata_part2_final.csv)
 
 ## **Streamlit UI**
+* [app.py](https://github.com/Ron-DS-AI/Information_Retrieval/blob/main/app.py)
+* [requirements.txt](https://github.com/Ron-DS-AI/Information_Retrieval/blob/main/requirements.txt)
