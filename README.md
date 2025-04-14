@@ -1,20 +1,50 @@
 # Information_Retrieval
-Information retrieval assignment collab
+* Information retrieval assignment - Group 7
+* Date: 14/04/25
+* Created by: Stephanie Edwards, Munir Jahangir, Neelam Ahmed and Ronald Almeida
 
-Search Engine Presentation and Demo
-The aim of assignments is to fully understand how a search engine is built by actually design and implementing the search engine, and to present and demonstrate it to us. The expectated outcome is a search system which allows to enter a query (could be via a command line or GUI) and get as an output, i.e., a ranked list of documents. In the presentation, the following should be made clear:
+## **TREC COVID2 (rnd3) Dataset**
+The original dataset was downloaded from here: [https://www.kaggle.com/competitions/trec-covid-information-retrieval/data?select=docids-rnd3.txt ](https://www.kaggle.com/competitions/trec-covid-information-retrieval/data) 
 
-the indexing method you have used, and show some sample data
-the retrieval method you have used, and be able to explain the ranking you obtain
-show how everything works on the documents collection which has been provided.
+Files included:
+- metadata.csv
+- topics-rnd3.csv
+- docids-rnd3.txt
+- qrels.csv
 
-What you are asked to submit is:
-A set of slides summarising your work
-A video recording of your presentation based on the slides
-A video recording of a live demo which shows a complete search process with your search engine
-A package of source code or any other files related to your implementation with some test data, to allow us verify the implementation and reproduce your experiment.
-The recordings should be no more than 8 minutes of presentation and 5 minutes of demo. The following marking scheme will be used to assess the search engine presentations:
-Timing, structure, clarity, presentation skills 25%
-Functionality of system 25%
-Architecture of system 25%
-Engineering and design competence 25%
+## **Preprocessing**
+Step 1: Cleaning & Abstractive summary creation [Preprocessing Directory](https://github.com/Ron-DS-AI/Information_Retrieval/tree/0fd7d6d8139ec75283087fed63419376812a68bc/Preprocessing)
+  1. **clean_and_prepoc_MJ.ipynb**
+  2. **BertSUM-summarised_abstracts.ipynb**
+
+Step 2: Search purpose tag category creation: [Search Purpose Categories Directory](https://github.com/Ron-DS-AI/Information_Retrieval/tree/0fd7d6d8139ec75283087fed63419376812a68bc/SearchPurposeCategories) 
+
+  3. **Search_Purpose_pt1_SE.ipynb** *(initial keyword matching to create labelled dataset)* 
+  4. **CategoryTraining - SE.ipynb** *(BERT classification model training on labelled dataset to create predictions on unlabelled data)* 
+  5. **Search_Purpose_pt2_SE.ipynb** *(Combining output from keyword matching and predicted categories into single dataset )* 
+
+**FINAL PREPROCESSING OUTPUT FILES**: 
+ * **preprocessed_metadata_with_summaries.csv**
+(https://github.com/Ron-DS-AI/Information_Retrieval/blob/0fd7d6d8139ec75283087fed63419376812a68bc/Preprocessing/preprocessed_metadata_with_summaries.csv)
+* **queries_rnd3_stacked.csv** (restructured to utilise all 3 variations of query topics) (https://github.com/Ron-DS-AI/Information_Retrieval/blob/0fd7d6d8139ec75283087fed63419376812a68bc/qrels/queries_rnd3_stacked.csv) 
+
+
+## **SBERT Model Training**
+6. **Fine_tuned_SBERT_hard_neg_mining_final.ipynb** (download to view) (https://github.com/Ron-DS-AI/Information_Retrieval/blob/0fd7d6d8139ec75283087fed63419376812a68bc/Fine_tuned_SBERT_hard_neg_mining_final.ipynb) 
+
+**OUTPUT**:
+* SBERT trained model, uploaded to huggingface: https://huggingface.co/StephKeddy/sbert-IR-covid-search-v2
+* **DEMO_test_queries.csv** (excludes queries used for training the model): https://github.com/Ron-DS-AI/Information_Retrieval/blob/0fd7d6d8139ec75283087fed63419376812a68bc/DEMO_test_queries.csv
+* **DEMO_test_qrels.csv** (qrels for the above demo test queries)
+
+## **Indexing & Retrieval (testing)** 
+
+7. **Indexing_and_retreival.ipynb** (https://github.com/Ron-DS-AI/Information_Retrieval/blob/0fd7d6d8139ec75283087fed63419376812a68bc/Indexing_and_retrieval.ipynb)
+
+**OUTPUT**: https://github.com/Ron-DS-AI/Information_Retrieval/tree/0fd7d6d8139ec75283087fed63419376812a68bc/full_corpus_SBERT_trained 
+* embeddings_part1.csv.gz
+* embeddings_part2.csv.gz
+* metadata_part1_final.csv
+* metadata_part2_final.csv
+
+## **Streamlit UI**
