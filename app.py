@@ -89,6 +89,11 @@ def search(query, corpus, model, top_k=50):
     top_indices = similarities.argsort()[-top_k:][::-1]
     return corpus.iloc[top_indices], similarities[top_indices]
 
+def preprocess_text(text):
+    if isinstance(text, str):
+        return ' '.join(text.lower().split())
+    return text
+
 def recalibrate_score(score, low=0.999, high=1.0):
     """Rescales cosine similarity to a 0-100 relevance score."""
     score = np.clip(score, low, high)
@@ -176,6 +181,8 @@ def main():
         
     # Main interface
     if query:
+        # Preprocess query unless it's '*'
+        processed_query = query if query.strip() == '*' else preprocess_text(query)
         with st.spinner(f"Searching for '{query}'..."):
             if query.strip() == '*':
                 # Special case: '*' returns all documents
@@ -183,8 +190,8 @@ def main():
                 scores = np.zeros(len(corpus))  # Placeholder scores
                 st.info("Showing all documents matching filters (date, tags, references).")
             else:
-                # Regular semantic search
-                raw_results, scores = search(query, corpus, model, top_k=1000)
+                # Regular semantic search with preprocessed query
+                raw_results, scores = search(processed_query, corpus, model, top_k=1000)
             
             # Apply date filter
             date_filtered = raw_results[
