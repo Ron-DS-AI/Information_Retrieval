@@ -111,14 +111,15 @@ def main():
         st.header("Search Parameters")
         query = st.text_input("Enter your search query:")
         top_k = st.slider("Number of results to display", 10, 100, 50)
-        # Slider for minimum referenced_by_count
+        # Number input for minimum referenced_by_count
         max_refs = int(corpus['referenced_by_count'].max())
-        min_refs = st.slider(
+        min_refs = st.number_input(
             "Minimum references",
             min_value=0,
             max_value=max_refs,
             value=0,
-            step=1
+            step=1,
+            help=f"Enter a number between 0 and {max_refs} to filter documents by minimum references."
         )
         
         # Date range filter with validation
@@ -260,7 +261,7 @@ def main():
                     ),
                     "similarity": st.column_config.NumberColumn(
                         "Relevance",
-                        format="%.1f"  # Updated to match recalibrate_score precision
+                        format="%.1f"
                     )
                 },
                 hide_index=True,
