@@ -10,7 +10,7 @@ from datetime import datetime
 from datetime import date
 
 # Configuration
-CORPUS_PATH = "corpus_data_SBERT_trained"
+CORPUS_PATH = "full_corpus_SBERT_trained"
 EMBEDDING_FILES = [
     "embeddings_part1.csv.gz",
     "embeddings_part2.csv.gz"
@@ -89,7 +89,7 @@ def search(query, corpus, model, top_k=50):
     top_indices = similarities.argsort()[-top_k:][::-1]
     return corpus.iloc[top_indices], similarities[top_indices]
 
-def recalibrate_score(score, low=0.9995, high=1.0):
+def recalibrate_score(score, low=0.999, high=1.0):
     """Rescales cosine similarity to a 0-100 relevance score."""
     score = np.clip(score, low, high)
     return round(100 * (score - low) / (high - low), 1)
