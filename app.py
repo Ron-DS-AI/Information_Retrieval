@@ -111,10 +111,17 @@ def main():
         corpus, all_tags, tag_freq = load_corpus()
         model = load_model()
     
+    # Initialize session state for query
+    if 'query' not in st.session_state:
+        st.session_state.query = ""
+    
     # Sidebar controls
     with st.sidebar:
         st.header("Search Parameters")
-        query = st.text_input("Enter your search query:")
+        sidebar_query = st.text_input("Enter your search query:", key="sidebar_query", value=st.session_state.query)
+        # Update session state when sidebar input changes
+        st.session_state.query = sidebar_query
+        
         top_k = st.slider("Number of results to display", 10, 100, 50)
         # Number input for minimum referenced_by_count
         max_refs = int(corpus['referenced_by_count'].max())
@@ -180,6 +187,7 @@ def main():
         """, unsafe_allow_html=True)
         
     # Main interface
+    query = st.session_state.query
     if query:
         # Preprocess query unless it's '*'
         processed_query = query if query.strip() == '*' else preprocess_text(query)
@@ -284,7 +292,15 @@ def main():
                 mime="text/csv"
             )
     else:
-        st.info("Enter a search query to begin")
+        # Centered search input
+        # st.markdown("<h3 style='text-align: center;'>Search for Research Documents</h3>", unsafe_allow_html=True)
+        st.text_input(
+            "", 
+            key="main_query", 
+            placeholder="Enter a search query to begin",
+            value=st.session_state.query,
+            on_change=lambda: st.session_state.update(query=st.session_state.main_query)
+        )
 
 if __name__ == "__main__":
     main()
