@@ -10,7 +10,7 @@
 Shuttle provides a simple, user-friendly interface for academic document retrieval tasks. The Search bar on the left offers freeform input for natural language or keyword queries, with the ability to narrow down the number of results returned.
 
 There are also filters:
-* By reference count
+* By # cited by
 * By date
 * By tag, for intent filtering
 
